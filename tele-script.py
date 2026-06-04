@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 import sqlite3
 import telebot
@@ -5,8 +6,8 @@ import threading
 import time
 
 # --- Configuration ---
-BOT_TOKEN = "8701795551:AAHaRAYZY1B1ZOSCkt9QmROuvgRhL0u4_Mk"
-ADMIN_CHAT_ID = 8034881242  # Better as integer
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8701795551:AAHaRAYZY1B1ZOSCkt9QmROuvgRhL0u4_Mk")
+ADMIN_CHAT_ID = int(os.environ.get("ADMIN_CHAT_ID", "8034881242"))
 DB_NAME = "database.db"
 
 app = Flask(__name__)
@@ -158,4 +159,5 @@ if __name__ == '__main__':
     bot_thread.start()
     
     print("🚀 API Server + Bot Started!")
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
